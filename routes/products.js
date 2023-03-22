@@ -1,44 +1,14 @@
 const express = require('express')
 const router = express.Router()
 
-router.get('/products', (req, res) => {
-    res.json(products)
-})
-
-router.get("/products/:id", (req, res) => {
-    console.log("GET /products/:id")
-
-    let myId = req.params.id;
-
-    let matchingItem = products.find((item, index) => {
-        return item._id == myId
-    })
-
-    if (matchingItem) {
-        res.json(matchingItem);
-    } else {
-        res.send("No ID found")
-    }
+const productsController = require('../controllers/products')
 
 
-})
+router.get('/products', productsController.list)
 
-router.post("/products", (req, res) => {
-    console.log("POST /products")
+router.get("/products/:id", productsController.show)
 
-    let newItem = {};
-    newItem._id = contacts.length + 1;
-    newItem.postId = 1;
-    newItem.name = req.body.name;
-    newItem.description = req.body.description;
-
-
-    // put in the database
-    products.push(newItem);
-
-    // return the newItem on the response
-    res.json(newItem)
-})
+router.post("/products", productsController.create)
 
 
 module.exports = router

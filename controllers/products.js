@@ -1,15 +1,15 @@
-const contacts = require("../data/contacts")
+const products = require("../data/products")
 
 const list = (req, res) => {
-    res.json(contacts)
+    res.json(products)
 }
 
 const show = (req, res) => {
-    console.log("GET /contacts/:id")
+    console.log("GET /products/:id")
 
     let myId = req.params.id;
 
-    let matchingItem = contacts.find((item, index) => {
+    let matchingItem = products.find((item, index) => {
         return item._id == myId
     })
 
@@ -23,18 +23,17 @@ const show = (req, res) => {
 }
 
 const create = (req, res) => {
-    console.log("POST /contacts")
+    console.log("POST /products")
 
     let newItem = {};
     newItem._id = contacts.length + 1;
     newItem.postId = 1;
-    newItem.name = req.body.name
-    newItem.occupation = req.body.occupation
-    newItem.avatar = req.body.avatar
+    newItem.name = req.body.name;
+    newItem.description = req.body.description;
 
 
     // put in the database
-    contacts.push(newItem);
+    products.push(newItem);
 
     // return the newItem on the response
     res.json(newItem)
